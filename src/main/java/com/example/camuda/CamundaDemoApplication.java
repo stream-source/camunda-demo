@@ -9,10 +9,10 @@ import org.springframework.context.event.EventListener;
 
 @SpringBootApplication
 @EnableProcessApplication("myProcessApplicationName")
-public class CamudaDemoApplication {
+public class CamundaDemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CamudaDemoApplication.class, args);
+        SpringApplication.run(CamundaDemoApplication.class, args);
     }
 
     @EventListener
