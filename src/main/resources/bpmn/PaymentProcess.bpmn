@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_06uf7j3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.17.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="PaymentProcess" name="支付流程" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="Event_19up3ja" name="支付请求">
+      <bpmn:outgoing>Flow_00c0tb8</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_00c0tb8" sourceRef="Event_19up3ja" targetRef="Task_ProductDiscountRule" />
+    <bpmn:businessRuleTask id="Task_ProductDiscountRule" name="商品折扣规则" camunda:resultVariable="productDiscountResult" camunda:decisionRef="Decision_ProductDiscountRule" camunda:decisionRefBinding="deployment" camunda:mapDecisionResult="singleResult">
+      <bpmn:incoming>Flow_00c0tb8</bpmn:incoming>
+      <bpmn:outgoing>Flow_08b6ivz</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="Gateway_UserApprove" name="是否需用户确认？">
+      <bpmn:incoming>Flow_08b6ivz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ken6t8</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1w3kj8i</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_08b6ivz" sourceRef="Task_ProductDiscountRule" targetRef="Gateway_UserApprove" />
+    <bpmn:sequenceFlow id="Flow_0ken6t8" name="折扣后价格&#60;100元" sourceRef="Gateway_UserApprove" targetRef="Task_PaymentService" />
+    <bpmn:serviceTask id="Task_PaymentService" name="调用支付服务" camunda:delegateExpression="${paymentDelegate}">
+      <bpmn:incoming>Flow_0ken6t8</bpmn:incoming>
+      <bpmn:incoming>Flow_1h094ng</bpmn:incoming>
+      <bpmn:outgoing>Flow_09hj7bv</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1w3kj8i" name="折扣后价格&#62;=100元" sourceRef="Gateway_UserApprove" targetRef="Task_UserConfirmPayment">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${productDiscountResult.productDiscountPrice&gt;=100}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="Task_UserConfirmPayment" name="用户确认付款" camunda:formKey="camunda-forms:deployment:bpmn/PaymentConfirmForm.form" camunda:assignee="${paymentAssignee}">
+      <bpmn:incoming>Flow_1w3kj8i</bpmn:incoming>
+      <bpmn:outgoing>Flow_1o0o2cf</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_09f2scp" name="支付成功">
+      <bpmn:incoming>Flow_09hj7bv</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_09hj7bv" sourceRef="Task_PaymentService" targetRef="Event_09f2scp" />
+    <bpmn:exclusiveGateway id="Gateway_1b96gko" name="用户是否同意支付?">
+      <bpmn:incoming>Flow_1o0o2cf</bpmn:incoming>
+      <bpmn:outgoing>Flow_1h094ng</bpmn:outgoing>
+      <bpmn:outgoing>Flow_14cv955</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1o0o2cf" sourceRef="Task_UserConfirmPayment" targetRef="Gateway_1b96gko" />
+    <bpmn:sequenceFlow id="Flow_1h094ng" name="同意" sourceRef="Gateway_1b96gko" targetRef="Task_PaymentService">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${approvalResult == 1}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_1mfqcc0" name="拒绝支付">
+      <bpmn:incoming>Flow_14cv955</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_14cv955" name="不同意" sourceRef="Gateway_1b96gko" targetRef="Event_1mfqcc0" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PaymentProcess">
+      <bpmndi:BPMNShape id="Event_19up3ja_di" bpmnElement="Event_19up3ja">
+        <dc:Bounds x="162" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="158" y="175" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sdku82_di" bpmnElement="Task_ProductDiscountRule">
+        <dc:Bounds x="250" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0lmwvrj_di" bpmnElement="Gateway_UserApprove" isMarkerVisible="true">
+        <dc:Bounds x="405" y="125" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="386" y="95" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1b96gko_di" bpmnElement="Gateway_1b96gko" isMarkerVisible="true">
+        <dc:Bounds x="765" y="235" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="746" y="292" width="88" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1mfqcc0_di" bpmnElement="Event_1mfqcc0">
+        <dc:Bounds x="972" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="968" y="285" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_059z3um_di" bpmnElement="Task_UserConfirmPayment">
+        <dc:Bounds x="590" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mwqou9_di" bpmnElement="Task_PaymentService">
+        <dc:Bounds x="740" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_09f2scp_di" bpmnElement="Event_09f2scp">
+        <dc:Bounds x="962" y="112" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="958" y="155" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_00c0tb8_di" bpmnElement="Flow_00c0tb8">
+        <di:waypoint x="198" y="150" />
+        <di:waypoint x="250" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08b6ivz_di" bpmnElement="Flow_08b6ivz">
+        <di:waypoint x="350" y="150" />
+        <di:waypoint x="405" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ken6t8_di" bpmnElement="Flow_0ken6t8">
+        <di:waypoint x="455" y="150" />
+        <di:waypoint x="598" y="150" />
+        <di:waypoint x="598" y="130" />
+        <di:waypoint x="740" y="130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="629" y="112" width="80" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1w3kj8i_di" bpmnElement="Flow_1w3kj8i">
+        <di:waypoint x="430" y="175" />
+        <di:waypoint x="430" y="260" />
+        <di:waypoint x="590" y="260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="405" y="215" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09hj7bv_di" bpmnElement="Flow_09hj7bv">
+        <di:waypoint x="840" y="130" />
+        <di:waypoint x="962" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o0o2cf_di" bpmnElement="Flow_1o0o2cf">
+        <di:waypoint x="690" y="260" />
+        <di:waypoint x="765" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1h094ng_di" bpmnElement="Flow_1h094ng">
+        <di:waypoint x="790" y="235" />
+        <di:waypoint x="790" y="170" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="794" y="202" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14cv955_di" bpmnElement="Flow_14cv955">
+        <di:waypoint x="815" y="260" />
+        <di:waypoint x="972" y="260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="877" y="242" width="33" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

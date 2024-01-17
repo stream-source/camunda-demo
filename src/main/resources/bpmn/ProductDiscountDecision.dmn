@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="ProductDiscountDecision" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.17.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.20.0">
+  <decision id="Decision_ProductDiscountRule" name="商品折扣规则">
+    <decisionTable id="DecisionTable_0jbx3zo" hitPolicy="FIRST">
+      <input id="Input_1" label="productName">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1fq0j99" label="productPrice">
+        <inputExpression id="LiteralExpression_147p3nm" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="productDiscount" typeRef="string" />
+      <output id="OutputClause_0nyjdgv" label="productDiscountPrice" typeRef="string" />
+      <rule id="DecisionRule_0axibqv">
+        <description>8折</description>
+        <inputEntry id="UnaryTests_00hhhrc">
+          <text>"单板吉他"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18wnwcc">
+          <text>&gt;200</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1or8l1l">
+          <text>0.8</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ibc7gy">
+          <text>productPrice * 0.8</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0bh47up">
+        <description>75折</description>
+        <inputEntry id="UnaryTests_1j3ig1q">
+          <text>"全单吉他"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bee3b6">
+          <text>&gt;500</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pzioho">
+          <text>0.75</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0hbbh03">
+          <text>productPrice * 0.75</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1u06ezl">
+        <description>9折</description>
+        <inputEntry id="UnaryTests_1c6kkzy">
+          <text>"碳纤维吉他"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0mno8cq">
+          <text>&gt;200</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1d97xyu">
+          <text>0.9</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_02smy8h">
+          <text>productPrice * 0.9</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0vmboxf">
+        <description>yuanjia</description>
+        <inputEntry id="UnaryTests_0l559qj">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wbsy6c">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_063htp4">
+          <text>1</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1jxzlsd">
+          <text>productPrice </text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_ProductDiscountRule">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
