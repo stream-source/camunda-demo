@@ -1,4 +1,4 @@
-package com.example.camuda;
+package com.example.camuda.usertask;
 
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.RepositoryService;
