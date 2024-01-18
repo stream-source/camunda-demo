@@ -5,6 +5,8 @@ import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.repository.Deployment;
+import org.camunda.bpm.engine.variable.VariableMap;
+import org.camunda.bpm.engine.variable.Variables;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -49,8 +51,10 @@ public class ProcessController {
     public String start(@PathVariable("processKey") String processKey) {
         System.out.println("start-start");
         identityService.setAuthenticatedUserId("demo");
+        VariableMap variableMap = Variables.createVariables();
+        variableMap.put("isFree", false);
         // 启动流程：通过流程定义的key或者id启动
-        runtimeService.startProcessInstanceByKey(processKey);
+        runtimeService.startProcessInstanceByKey(processKey,variableMap);
         return "success";
     }
 }

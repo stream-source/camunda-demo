@@ -72,13 +72,15 @@ processInstanceId: 流程实例id
 
 /start/{processKey}
 
+可以将流程过程中的变量传入
+
 
 
 # 任务
 
-## 用户任务
+## 用户任务userTask
 
-## 服务任务
+## 业务任务ServiceTask
 
 ### JavaClass
 
@@ -141,3 +143,15 @@ public class TelCallService {
     }
 }
 ```
+
+## 外部任务ExternalTask
+
+1、Process Engine
+
+2、External Worker
+
+3、External Worker & process engine
+
+rest api，长轮询机制；
+
+
