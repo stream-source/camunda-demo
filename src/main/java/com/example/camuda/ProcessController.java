@@ -45,10 +45,12 @@ public class ProcessController {
     /**
      * 启动流程
      */
-    @GetMapping("/start")
-    public String start() {
+    @GetMapping("/start/{processKey}")
+    public String start(@PathVariable("processKey") String processKey) {
         System.out.println("start-start");
-        runtimeService.startProcessInstanceByKey("priceApproval");
+        identityService.setAuthenticatedUserId("demo");
+        // 启动流程：通过流程定义的key或者id启动
+        runtimeService.startProcessInstanceByKey(processKey);
         return "success";
     }
 }

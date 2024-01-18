@@ -17,11 +17,11 @@ public class CamundaDemoApplication {
 
     @EventListener
     public void onPostDeploy(PostDeployEvent event) {
-        System.out.println(event.toString());
+        System.out.println("~~~PostDeployEvent：" + event.toString());
     }
 
     @EventListener
     public void onPreUndeploy(PreUndeployEvent event) {
-        System.out.println(event.toString());
+        System.out.println("~~~PreUndeployEvent：" + event.toString());
     }
 }
