@@ -219,3 +219,16 @@ camunda.bpm.client.basic-auth.password=wangxuan
 ## 脚本任务
 
 ![img.png](images/img14.png)
+
+    引用外部脚本
+
+
+![img.png](images/img15.png)
+
+        ```javascript
+        var person = execution.getVariable("name");
+var originDays = execution.getVariable("originDays");
+var leaveDay = execution.getVariable("leaveday");
+leftAnnualDays = originDays - leaveDay;
+        ```
+
