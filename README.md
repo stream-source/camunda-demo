@@ -180,3 +180,17 @@ rest api，长轮询机制；
 ![img.png](images/img7.png)
 
 
+## 授权过滤器
+
+外部任务，需要配置用户信息，才能访问流程引擎控制中心数据,保证数据安全；
+
+否则：HTTP/1.1' returned error: status code '401' - message: status code: 401
+
+新增配置项
+
+```java
+camunda.bpm.client.basic-auth.username=wangxuan
+camunda.bpm.client.basic-auth.password=wangxuan
+
+```
+
