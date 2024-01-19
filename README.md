@@ -196,4 +196,22 @@ camunda.bpm.client.basic-auth.password=wangxuan
 
 ## 多实例任务并行&串行
 
+### 串行
+
 ![img.png](images/img9.png)
+
+
+### 并行
+
+![img.png](images/img10.png)
+
+
+![img.png](images/img11.png)
+
+任务列表会存在同时存在多人任务
+
+![img.png](images/img12.png)
+
+
+![img_1.png](images/img13.png)
+
