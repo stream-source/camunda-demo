@@ -6,6 +6,7 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_0hsldkm" sourceRef="StartEvent_1" targetRef="Activity_1dh5i57" />
     <bpmn:receiveTask id="Activity_1dh5i57" name="接收任务" messageRef="Message_00vp69v">
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_0hsldkm</bpmn:incoming>
       <bpmn:outgoing>Flow_1fe2wu0</bpmn:outgoing>
     </bpmn:receiveTask>
