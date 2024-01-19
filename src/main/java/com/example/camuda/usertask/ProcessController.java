@@ -53,10 +53,11 @@ public class ProcessController {
         System.out.println("start-start");
         identityService.setAuthenticatedUserId("demo");
         VariableMap variableMap = Variables.createVariables();
-        LinkedList<String> leaders = new LinkedList<>();
-        leaders.add("wangxuan");
-        leaders.add("zhangsan");
-        variableMap.put("leaders", leaders);
+//        LinkedList<String> leaders = new LinkedList<>();
+//        leaders.add("wangxuan");
+//        leaders.add("zhangsan");
+//        variableMap.put("leaders", leaders);
+        variableMap.put("originDays", 5);
 //        variableMap.put("isFree", false);
         // 启动流程：通过流程定义的key或者id启动
         runtimeService.startProcessInstanceByKey(processKey,variableMap);

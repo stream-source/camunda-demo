@@ -215,3 +215,7 @@ camunda.bpm.client.basic-auth.password=wangxuan
 
 ![img_1.png](images/img13.png)
 
+
+## 脚本任务
+
+![img.png](images/img14.png)
