@@ -154,4 +154,29 @@ public class TelCallService {
 
 rest api，长轮询机制；
 
+![img.png](images/img8.png)
+
+引入依赖
+
+```java
+
+        <dependency>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter-external-task-client</artifactId>
+            <version>7.15.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+```
+
+
+## 外部任务监听器
+
+
+![img.png](images/img7.png)
+
 
