@@ -10,6 +10,7 @@ import org.camunda.bpm.engine.variable.Variables;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
 
 @RestController
 @RequestMapping("/process")
@@ -52,7 +53,11 @@ public class ProcessController {
         System.out.println("start-start");
         identityService.setAuthenticatedUserId("demo");
         VariableMap variableMap = Variables.createVariables();
-        variableMap.put("isFree", false);
+        LinkedList<String> leaders = new LinkedList<>();
+        leaders.add("wangxuan");
+        leaders.add("zhangsan");
+        variableMap.put("leaders", leaders);
+//        variableMap.put("isFree", false);
         // 启动流程：通过流程定义的key或者id启动
         runtimeService.startProcessInstanceByKey(processKey,variableMap);
         return "success";

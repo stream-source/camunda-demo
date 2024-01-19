@@ -194,3 +194,6 @@ camunda.bpm.client.basic-auth.password=wangxuan
 
 ```
 
+## 多实例任务并行&串行
+
+![img.png](images/img9.png)
